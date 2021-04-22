@@ -11,7 +11,7 @@ fn main() -> Result<(), io::Error> {
     terminal.draw(|f| {
         let size = f.size();
         let block = Block::default()
-            .title("Block")
+            .title("Greymail")
             .borders(Borders::ALL);
         f.render_widget(block, size);
     })
