@@ -10,6 +10,7 @@ fn main() -> Result<(), io::Error> {
     let mut terminal = Terminal::new(backend)?;
     terminal.draw(|f| {
         let size = f.size();
+        // Create a bordered block
         let block = Block::default()
             .title("Greymail")
             .borders(Borders::ALL);
