@@ -10,6 +10,7 @@ use crossterm::event::{self, EnableMouseCapture, DisableMouseCapture, Event as C
 use crossterm::execute;
 use tui::Terminal;
 use tui::backend::{CrosstermBackend, Backend};
+use app::{Account, AccountsList};
 
 mod ui;
 mod app;
@@ -74,7 +75,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    let mut app: app::App = app::App::new(vec![String::from("Inbox"), String::from("Outbox")]);
+    let mut app: app::App = app::App::new(
+        vec![
+            Account::new("m.sarahgreywolf@outlook.com", vec![String::from("Inbox"), String::from("Outbox")]),
+            Account::new("master0r0@me.com", vec![String::from("Inbox"), String::from("Outbox")]),
+        ]
+    );
 
     
     loop {
