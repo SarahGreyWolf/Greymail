@@ -12,8 +12,16 @@ use tui::Terminal;
 use tui::backend::{CrosstermBackend, Backend};
 
 mod ui;
+mod app;
+
+pub enum State {
+    List,
+    Render,
+}
+
 enum Event<I> {
     Input(I),
+    State(State),
     Tick
 }
 
@@ -65,19 +73,29 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
     });
+
+    let mut app: app::App = app::App::new(vec![String::from("Inbox"), String::from("Outbox")]);
+
     
     loop {
-        terminal.draw(|f| ui::draw(f))?;
+        terminal.draw(|f| ui::draw(f, &mut app))?;
         match rx.recv()? {
             Event::Input(event) => match event.code {
                 KeyCode::Char('q') => {
                     break;
                 },
+                KeyCode::Down => {
+                    app.on_down();
+                },
+                KeyCode::Up => {
+                    app.on_up();
+                },
                 _ => {}
             },
             Event::Tick => {
 
-            }
+            },
+            _ => {}
         }
     }
     quit(terminal.backend_mut())
